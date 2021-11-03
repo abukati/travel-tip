@@ -1,13 +1,12 @@
 import { storageService } from './local-storage.service.js'
+import { makeId } from './utils.service.js'
 
-export const locService = { getLocs, panLoc, deleteLoc, saveNewLoc }
+export const locService = { getLocs, panLoc, deleteLoc, askNewLocName, saveCurrLoc }
 
 const STORAGE_KEY = 'locs'
 
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 },
-]
+const locs = storageService.loadFromStorage(STORAGE_KEY) || []
+
 
 function panLoc(name) {
   let loc = locs.find((loc) => loc.name === name)
@@ -22,14 +21,30 @@ function deleteLoc(name) {
 }
 
 function getLocs() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(locs)
-        }, 2000)
-    })
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(locs)
+    }, 2000)
+  })
 }
 
-function saveNewLoc() {
+function saveCurrLoc(loc) {
+  askNewLocName().then(res => {
+    let newLoc = {
+      id: makeId(),
+      name: res,
+      lat: loc.lat,
+      lng: loc.lng,
+      createdAt: Date().slice(0,24),
+      updatedAt: Date().slice(0,24)
+    }
+    locs.push(newLoc)
+    storageService.saveToStorage(STORAGE_KEY, locs)
+  })
+  .catch(err => console.log(err))
+}
+
+function askNewLocName() {
   return new Promise((res, rej) => {
     const name = prompt('Name the spot')
     return name ? res(name) : rej('no input')
