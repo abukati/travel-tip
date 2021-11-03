@@ -5,6 +5,7 @@ export const mapService = {
   getMarkers,
   getGeocode,
   getLocName,
+  getCoords
 }
 
 const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
@@ -21,21 +22,30 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       content: 'Find and click locations you love!',
       position: { lat, lng },
     })
+    const coords = {
+        lat: gMap.center.lat(),
+        lng: gMap.center.lng()
+    }
+    gCurrPos = coords
     infoWindow.open(gMap)
     gMap.addListener('click', (ev) => {
-      infoWindow.close()
+        infoWindow.close()
       const coords = {
-        lat: ev.latLng.lat(),
+          lat: ev.latLng.lat(),
         lng: ev.latLng.lng(),
-      }
-      gCurrPos = coords
-      infoWindow = new google.maps.InfoWindow({
+    }
+    gCurrPos = coords
+    infoWindow = new google.maps.InfoWindow({
         position: coords,
-      })
-      infoWindow.setContent(JSON.stringify(ev.latLng.toJSON(), null, 2))
-      infoWindow.open(gMap)
     })
-  })
+    infoWindow.setContent(JSON.stringify(ev.latLng.toJSON(), null, 2))
+    infoWindow.open(gMap)
+    })
+})
+}
+
+function getCoords(coords = gCurrPos) {
+    return coords
 }
 
 function addMarker(loc) {

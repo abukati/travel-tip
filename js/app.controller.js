@@ -5,20 +5,23 @@ import { weatherService } from './services/weather.service.js'
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
-window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onLocClick = onLocClick
 window.onRemoveLoc = onRemoveLoc
+window.onGetLocUrl = onGetLocUrl
 
 function onInit() {
-  mapService
-    .initMap()
+  const urlSearchParams = new URLSearchParams(window.location.search)
+  const params = Object.fromEntries(urlSearchParams.entries())
+  const coords = { lat: +params.lat, lng: +params.lng }
+  mapService.initMap()
     .then(() => {
       console.log('Map is ready')
       renderCurrLoc()
+      if (coords.lat && coords.lng) mapService.initMap(coords.lat, coords.lng).then(renderCurrLoc)
     })
     .catch((err) => console.log(err))
-  renderLocs()
+    renderLocs()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -29,15 +32,7 @@ function getPosition() {
 }
 
 function onAddMarker() {
-  // console.log('Adding a marker')
   mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
-}
-
-function onGetLocs() {
-  locService.getLocs().then((locs) => {
-    // console.log('Locations:', locs)
-    // document.querySelector('.locs').innerText = JSON.stringify(locs)
-  })
 }
 
 function onGetUserPos() {
@@ -46,6 +41,7 @@ function onGetUserPos() {
       const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude }
       mapService.panTo(coords)
     })
+    .then(renderCurrLoc)
     .catch((err) => {
       console.log('err!!!', err)
     })
@@ -73,7 +69,12 @@ function renderCurrLoc() {
     .catch((err) => (elCurrLocation.innerHTML = 'Are you ok?'))
 }
 
-function onGetLocUrl() {}
+function onGetLocUrl() {
+  const pos = mapService.getCoords()
+  const url = `https://artiombkt.github.io/travel-tip/?lat=${pos.lat}&lng=${pos.lng}`
+  navigator.clipboard.writeText(url)
+}
+
 
 function renderWeather(weather) {
   const elWeather = document.querySelector('.weather-container .weather')
