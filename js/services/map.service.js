@@ -45,10 +45,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 }
 
 function getCoords(coords = gCurrPos) {
-    return coords
-}
-
-function getCoords(coords = gCurrPos) {
   return coords
 }
 
