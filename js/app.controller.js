@@ -52,5 +52,5 @@ function onPanTo() {
   let searchVal = document.querySelector('.search-bar').value
   mapService.getGeocode(searchVal)
     .then(mapService.panTo)
-    .then(locService.saveCurrLoc)
+    .then(locService.saveLoc)
 }

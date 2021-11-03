@@ -1,7 +1,7 @@
 import { storageService } from './local-storage.service.js'
 import { makeId } from './utils.service.js'
 
-export const locService = { getLocs, panLoc, deleteLoc, askNewLocName, saveCurrLoc }
+export const locService = { getLocs, panLoc, deleteLoc, askNewLocName, saveLoc }
 
 const STORAGE_KEY = 'locs'
 
@@ -28,7 +28,7 @@ function getLocs() {
   })
 }
 
-function saveCurrLoc(loc) {
+function saveLoc(loc) {
   askNewLocName().then(res => {
     let newLoc = {
       id: makeId(),
@@ -38,7 +38,6 @@ function saveCurrLoc(loc) {
       createdAt: Date().slice(0,24),
       updatedAt: Date().slice(0,24)
     }
-    console.log(newLoc);
     locs.push(newLoc)
     storageService.saveToStorage(STORAGE_KEY, locs)
   })
