@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
+/* BASIC */
+
+body {
+  margin: 0;
+}
+
+/* LAYOUT */
+
+.main-layout {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Main Header */
