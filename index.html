@@ -17,13 +17,16 @@
         <!-- <div class="logo"><img src="img/logo.png" /></div> -->
         <div class="search-container">
           <input type="text" class="search-bar" placeholder="Enter Location" />
-          <button type="submit" onclick="onPanTo()" class="uppercase search-btn">
+          <button
+            type="submit"
+            onclick="onPanTo()"
+            class="uppercase search-btn"
+          >
             <i class="fa fa-search"></i>
           </button>
         </div>
       </div>
     </header>
-
     <main class="main-content main-layout">
       <section class="locations-container flex space-between">
         <button>
@@ -42,10 +45,8 @@
           <i class="fas fa-location-arrow"></i>
         </button>
       </section>
-
       <section class="content flex">
         <div id="map"></div>
-
         <div class="info-container flex columns">
           <div class="weather flex columns">
             <h2>Weather today</h2>
@@ -61,20 +62,7 @@
           </div>
         </div>
       </section>
-
-      <!-- <button onclick="onAddMarker()" class="btn-add-marker">
-        Add Marker Speific Location
-      </button>
-      <button onclick="onGetUserPos()" class="btn-user-pos">
-        Get User Position
-      </button>
-      <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-      <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
-      <p>Starting project</p>
-      <p>You are at: <span class="user-pos"></span></p>
-      <p>Locations: <span class="locs"></span></p> -->
     </main>
-
     <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
   </body>
