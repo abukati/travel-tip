@@ -12,8 +12,8 @@
         <h1>TravelTip</h1>
         <div class="search-container">
           <input type="text" class="search-bar" placeholder="Enter Location" />
-          <button type="submit" class="uppercase">go</button>
-          <button type="submit">My Location</button>
+          <button type="submit" class="uppercase" onclick="onPanTo()">go</button>
+          <button type="submit" onclick="onGetUserPos()">My Location</button>
         </div>
       </div>
     </header>
@@ -22,7 +22,7 @@
       <section class="location-container">
         <div class="my-location flex space-between">
           <span>Location: <span>location</span></span>
-          <button type="submit" onclick="onGetUserPos()">Copy Location</button>
+          <button type="submit">Copy Location</button>
         </div>
       </section>
 
