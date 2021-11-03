@@ -1,20 +1,41 @@
 import { storageService } from './local-storage.service.js'
 import { makeId } from './utils.service.js'
 
-export const locService = { getLocs, panLoc, deleteLoc, askNewLocName, saveLoc }
+export const locService = {
+  getLocs,
+  panLoc,
+  removeLoc,
+  askNewLocName,
+  saveLoc,
+}
 
-const STORAGE_KEY = 'locs'
-
+const STORAGE_KEY = 'locationsDB'
 const locs = storageService.loadFromStorage(STORAGE_KEY) || []
 
+function saveLoc(loc) {
+  askNewLocName()
+    .then((res) => {
+      let newLoc = {
+        id: makeId(),
+        name: res,
+        lat: loc.lat,
+        lng: loc.lng,
+        createdAt: Date().slice(0, 24),
+        updatedAt: Date().slice(0, 24),
+      }
+      locs.push(newLoc)
+      storageService.saveToStorage(STORAGE_KEY, locs)
+    })
+    .catch((err) => console.log(err))
+}
 
-function panLoc(name) {
-  let loc = locs.find((loc) => loc.name === name)
+function panLoc(locId) {
+  let loc = locs.find((loc) => loc.locId === locId)
   return Promise.resolve({ lat: loc.lat, lng: loc.lng })
 }
 
-function deleteLoc(name) {
-  let locIdx = locs.findIndex((loc) => loc.name === name)
+function removeLoc(locId) {
+  let locIdx = locs.findIndex((loc) => loc.locId === locId)
   locs.splice(locIdx, 1)
   storageService.saveToStorage(STORAGE_KEY, locs)
   return Promise.resolve(locs)
@@ -28,25 +49,9 @@ function getLocs() {
   })
 }
 
-function saveLoc(loc) {
-  askNewLocName().then(res => {
-    let newLoc = {
-      id: makeId(),
-      name: res,
-      lat: loc.lat(),
-      lng: loc.lng(),
-      createdAt: Date().slice(0,24),
-      updatedAt: Date().slice(0,24)
-    }
-    locs.push(newLoc)
-    storageService.saveToStorage(STORAGE_KEY, locs)
-  })
-  .catch(err => console.log(err))
-}
-
 function askNewLocName() {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     const name = prompt('Name the spot')
-    return name ? res(name) : rej('no input')
+    return name ? resolve(name) : reject('no input')
   })
 }
