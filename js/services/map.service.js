@@ -22,6 +22,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       content: 'Find and click locations you love!',
       position: { lat, lng },
     })
+    const coords = {
+      lat: gMap.center.lat(),
+      lng: gMap.center.lng(),
+    }
+    gCurrPos = coords
     infoWindow.open(gMap)
     gMap.addListener('click', (ev) => {
       infoWindow.close()
