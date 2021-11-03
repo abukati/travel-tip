@@ -7,6 +7,8 @@ export const mapService = {
     getGeocode
 }
 
+const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
+
 let gMap
 
 let gMarkers = []
@@ -14,13 +16,10 @@ let gMarkers = []
 let currPos
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
+    const elMap = document.querySelector('#map')
     return _connectGoogleApi()
         .then(() => {
-            gMap = new google.maps.Map(
-                document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 10
-            })
+            gMap = new google.maps.Map(elMap, { center: { lat, lng }, zoom: 10 })
             let infoWindow = new google.maps.InfoWindow({
                 content: 'Find and click locations you love!',
                 position: { lat, lng }
@@ -54,23 +53,22 @@ function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
     gMap.panTo(laLatLng)
     addMarker(laLatLng)
+    return laLatLng
 }
 
 function getMarkers() {
     return Promise.resolve(gMarkers)
 }
 
-function getGeocode(searchValue) {
-    const API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
-    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=${API_KEY}`)
+function getGeocode(location) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${GOOGLE_API_KEY}`)
         .then(res => res.data.results[0].geometry.location)
 }
 
 function _connectGoogleApi() {
   if (window.google) return Promise.resolve()
-  const API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
   var elGoogleApi = document.createElement('script')
-  elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
+  elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}`
   elGoogleApi.async = true
   document.body.append(elGoogleApi)
 

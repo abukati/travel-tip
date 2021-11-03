@@ -33,11 +33,12 @@ function saveCurrLoc(loc) {
     let newLoc = {
       id: makeId(),
       name: res,
-      lat: loc.lat,
-      lng: loc.lng,
+      lat: loc.lat(),
+      lng: loc.lng(),
       createdAt: Date().slice(0,24),
       updatedAt: Date().slice(0,24)
     }
+    console.log(newLoc);
     locs.push(newLoc)
     storageService.saveToStorage(STORAGE_KEY, locs)
   })
