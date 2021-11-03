@@ -43,7 +43,8 @@ function onGetLocs() {
 function onGetUserPos() {
   getPosition()
     .then((pos) => {
-      mapService.panTo(pos.coords.latitude, pos.coords.longitude)
+      const loc = {lat: pos.coords.latitude, lng: pos.coords.longitude}
+      mapService.panTo(loc)
       // document.querySelector(
       //   '.user-pos'
       // ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
@@ -59,13 +60,11 @@ function onPanTo() {
     .getGeocode(location)
     .then(mapService.panTo)
     .then(locService.saveLoc)
-    .then(renderCurrLoc)
     .then(renderLocs)
     .then(renderCurrLoc)
 }
 
 function renderCurrLoc() {
-  console.log('renderCurrLoc')
   const elCurrLocation = document.querySelector('.locations-container span')
   mapService.getLocName().then(locName => {
     if (locName) {
