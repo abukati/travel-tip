@@ -43,10 +43,8 @@ function onGetLocs() {
 function onGetUserPos() {
   getPosition()
     .then((pos) => {
-      mapService.panTo(pos.coords.latitude, pos.coords.longitude)
-      // document.querySelector(
-      //   '.user-pos'
-      // ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+      const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude }
+      mapService.panTo(coords)
     })
     .catch((err) => {
       console.log('err!!!', err)
@@ -59,21 +57,20 @@ function onPanTo() {
     .getGeocode(location)
     .then(mapService.panTo)
     .then(locService.saveLoc)
-    .then(renderCurrLoc)
     .then(renderLocs)
     .then(renderCurrLoc)
 }
 
 function renderCurrLoc() {
-  console.log('renderCurrLoc')
   const elCurrLocation = document.querySelector('.locations-container span')
-  mapService.getLocName().then(locName => {
-    if (locName) {
-      elCurrLocation.innerHTML = locName
-    }
-  })
-  .catch(err => elCurrLocation.innerHTML = 'Are you ok?')
-
+  mapService
+    .getLocName()
+    .then((locName) => {
+      if (locName) {
+        elCurrLocation.innerHTML = locName
+      }
+    })
+    .catch((err) => (elCurrLocation.innerHTML = 'Are you ok?'))
 }
 
 function onGetLocUrl() {}
@@ -90,7 +87,8 @@ function renderLocs() {
   locService.getLocs().then((res) => {
     res.forEach((location) => {
       const locId = `${location.id}`
-      strHtmls += `<button class="capitalize location" data-locid="${locId}" onclick="onLocClick(this.dataset.locid)">
+      strHtmls += `<button class="capitalize location" data-locid="${locId}" title="{ lat:${location.lat} , lng:${location.lng} }"
+       onclick="onLocClick(this.dataset.locid)">
       ${location.name}
       <i class="fas fa-trash-alt icon" data-locid="${locId}" onclick="onRemoveLoc(this.dataset.locid)"></i>
       </button>`
@@ -104,6 +102,8 @@ function onRemoveLoc(locid) {
   renderLocs()
 }
 
-function onLocClick(locid) {}
+function onLocClick(locid) {
+  locService.panLoc(locid).then(mapService.panTo).then(renderCurrLoc)
+}
 
 document.querySelector('#map').addEventListener('click', renderCurrLoc)
