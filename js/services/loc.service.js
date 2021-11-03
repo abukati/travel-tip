@@ -50,5 +50,3 @@ function _askNewLocName() {
     return name ? resolve(name) : reject('no input')
   })
 }
-
-window.locs = locs

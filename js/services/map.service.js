@@ -4,14 +4,14 @@ export const mapService = {
   panTo,
   getMarkers,
   getGeocode,
-  getLocName
+  getLocName,
 }
 
 const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
 
 let gMap
 let gMarkers = []
-let currPos
+var gCurrPos = { lat: 32.0749831, lng: 34.9120554 }
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
   const elMap = document.querySelector('#map')
@@ -22,13 +22,12 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       position: { lat, lng },
     })
     infoWindow.open(gMap)
-    gMap.addListener('click', ev => {
+    gMap.addListener('click', (ev) => {
       infoWindow.close()
       const coords = {
         lat: ev.latLng.lat(),
         lng: ev.latLng.lng(),
       }
-      getLocName(coords)
       infoWindow = new google.maps.InfoWindow({
         position: coords,
       })
@@ -47,8 +46,9 @@ function addMarker(loc) {
   return marker
 }
 
-function panTo(lat, lng) {
-  var laLatLng = new google.maps.LatLng(lat, lng)
+function panTo(coords) {
+  gCurrPos = coords
+  var laLatLng = new google.maps.LatLng(coords.lat, coords.lng)
   gMap.panTo(laLatLng)
   addMarker(laLatLng)
   return laLatLng
@@ -58,12 +58,14 @@ function getMarkers() {
   return Promise.resolve(gMarkers)
 }
 
-function getLocName(coords) {
-    let latLng = `${coords.lat},${coords.lng}`
-    return axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${GOOGLE_API_KEY}`
-        )
-        .then(res => res.data.results[0].plus_code.compound_code.slice(8))
+function getLocName(coords = gCurrPos) {
+  console.log('getLocName', coords)
+  let latLng = `${coords.lat},${coords.lng}`
+  return axios
+    .get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${GOOGLE_API_KEY}`
+    )
+    .then((res) => res.data.results[3].formatted_address)
 }
 
 function getGeocode(location) {
@@ -71,7 +73,7 @@ function getGeocode(location) {
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${GOOGLE_API_KEY}`
     )
-    .then(res => res.data.results[0].geometry.location)
+    .then((res) => res.data.results[0].geometry.location)
 }
 
 function _connectGoogleApi() {

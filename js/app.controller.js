@@ -15,6 +15,7 @@ function onInit() {
     .initMap()
     .then(() => {
       console.log('Map is ready')
+      renderCurrLoc()
     })
     .catch((err) => console.log(err))
   renderLocs()
@@ -60,12 +61,15 @@ function onPanTo() {
     .then(mapService.panTo)
     .then(locService.saveLoc)
     .then(renderLocs)
+    .then(renderCurrLoc)
 }
 
 function renderCurrLoc() {
+  console.log('renderCurrLoc')
   const elCurrLocation = document.querySelector('.locations-container span')
-  var strHtmls = ``
-  // elCurrLocation.innerHTML = strHtmls
+  mapService.getLocName().then((locname) => {
+    elCurrLocation.innerHTML = locname
+  })
 }
 
 function onGetLocUrl() {}
