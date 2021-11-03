@@ -1,5 +1,3 @@
-
-
 export const mapService = {
     initMap,
     addMarker,
@@ -37,8 +35,8 @@ function addMarker(loc) {
 }
 
 function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng);
-    gMap.panTo(laLatLng);
+  var laLatLng = new google.maps.LatLng(lat, lng)
+  gMap.panTo(laLatLng)
 }
 
 function getMarkers() {
@@ -54,15 +52,15 @@ function getWeather(lat, lng) {
 
 
 function _connectGoogleApi() {
-    if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I';
-    var elGoogleApi = document.createElement('script');
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
-    elGoogleApi.async = true;
-    document.body.append(elGoogleApi);
+  if (window.google) return Promise.resolve()
+  const API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
+  var elGoogleApi = document.createElement('script')
+  elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
+  elGoogleApi.async = true
+  document.body.append(elGoogleApi)
 
-    return new Promise((resolve, reject) => {
-        elGoogleApi.onload = resolve;
-        elGoogleApi.onerror = () => reject('Google script failed to load')
-    })
+  return new Promise((resolve, reject) => {
+    elGoogleApi.onload = resolve
+    elGoogleApi.onerror = () => reject('Google script failed to load')
+  })
 }

@@ -3,23 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TravelTip</title>
+    <title>traveltip</title>
+    <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
-    <h1>TravelTip Starter</h1>
-    <h3>Traveltip 2</h3>
-    <div id="map" style="width: 100%; height: 400px"></div>
-    <button onclick="onAddMarker()" class="btn-add-marker">
-      Add Marker Speific Location
-    </button>
-    <button onclick="onGetUserPos()" class="btn-user-pos">
-      Get User Position
-    </button>
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-    <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
-    <p>Starting project</p>
-    <p>You are at: <span class="user-pos"></span></p>
-    <p>Locations: <span class="locs"></span></p>
+    <header class="main-header">
+      <div class="header-container main-layout flex space-between align-center">
+        <h1>TravelTip</h1>
+        <div class="search-container">
+          <input type="text" class="search-bar" placeholder="Enter Location" />
+          <button type="submit" class="uppercase">go</button>
+          <button type="submit">My Location</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content main-layout">
+      <section class="location-container">
+        <div class="my-location flex space-between">
+          <span>Location: <span>location</span></span>
+          <button type="submit" onclick="onGetUserPos()">Copy Location</button>
+        </div>
+      </section>
+
+      <section class="content flex">
+        <div id="map"></div>
+
+        <div class="info-container flex columns">
+          <div class="weather flex columns">
+            <h2>Weather today</h2>
+          </div>
+
+          <div class="my-locations flex columns">
+            <h2>Locations Table</h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- <button onclick="onAddMarker()" class="btn-add-marker">
+        Add Marker Speific Location
+      </button>
+      <button onclick="onGetUserPos()" class="btn-user-pos">
+        Get User Position
+      </button>
+      <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+      <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
+      <p>Starting project</p>
+      <p>You are at: <span class="user-pos"></span></p>
+      <p>Locations: <span class="locs"></span></p> -->
+    </main>
 
 
     <script src="lib/axios.js"></script>
