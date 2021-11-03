@@ -79,12 +79,13 @@ button {
   height: 100vh;
 }
 
-.main-content .location-container {
+.main-content .locations-container {
   border: 2px solid white;
   width: 100%;
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 2rem;
+  font-size: 30px;
 }
 
 .main-content .content {
@@ -122,6 +123,10 @@ button {
   border: 2px solid white;
   border-radius: 20px;
   flex-basis: 50%;
+}
+
+.my-locations .home-btn {
+  font-size: 30px;
 }
 
 /* HELPERS */
