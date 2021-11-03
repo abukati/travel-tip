@@ -5,7 +5,8 @@
 /* BASIC */
 
 html {
-  background-color: darkgray;
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
 }
 
 body {
@@ -21,6 +22,15 @@ h6 {
   margin: 0;
 }
 
+img {
+  object-fit: contain;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
 /* LAYOUT */
 
 .main-layout {
@@ -31,8 +41,37 @@ h6 {
 /* Main Header */
 
 .main-header {
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+  padding: 15px;
   margin-bottom: 2rem;
-  margin-top: 2rem;
+}
+
+.header-container .search-container .search-bar {
+  position: relative;
+  border: 3px solid #00b4cc;
+  height: 38px;
+  border-right: none;
+  padding-left: 100px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9dbfaf;
+}
+
+.search-bar:focus {
+  color: #00b4cc;
+}
+
+.search-btn {
+  position: absolute;
+  border: 1px solid #00b4cc;
+  width: 40px;
+  height: 36px;
+  background: #00b4cc;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  font-size: 20px;
 }
 
 /* Main content */
@@ -41,10 +80,12 @@ h6 {
 }
 
 .main-content .location-container {
+  border: 2px solid white;
+  width: 100%;
+  border-radius: 20px;
+  padding: 20px;
   margin-bottom: 2rem;
 }
-
-/* Main content */
 
 .main-content .content {
   flex-direction: row-reverse;
@@ -72,12 +113,14 @@ h6 {
 }
 
 .content .info-container .weather {
-  background-color: red;
+  border: 2px solid white;
+  border-radius: 20px;
   flex-basis: 50%;
 }
 
 .content .info-container .my-locations {
-  background-color: blue;
+  border: 2px solid white;
+  border-radius: 20px;
   flex-basis: 50%;
 }
 

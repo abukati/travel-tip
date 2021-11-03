@@ -5,24 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>traveltip</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="//use.fontawesome.com/releases/v5.0.7/css/all.css"
+    />
   </head>
   <body>
     <header class="main-header">
       <div class="header-container main-layout flex space-between align-center">
         <h1>TravelTip</h1>
+        <!-- <div class="logo"><img src="img/logo.png" /></div> -->
         <div class="search-container">
           <input type="text" class="search-bar" placeholder="Enter Location" />
-          <button type="submit" class="uppercase">go</button>
-          <button type="submit">My Location</button>
+          <button type="submit" class="uppercase search-btn">
+            <i class="fa fa-search"></i>
+          </button>
         </div>
       </div>
     </header>
 
     <main class="main-content main-layout">
       <section class="location-container">
+        <button type="submit" onclick="onGetUserPos()">My Location</button>
         <div class="my-location flex space-between">
-          <span>Location: <span>location</span></span>
-          <button type="submit" onclick="onGetUserPos()">Copy Location</button>
+          <span>Location: <span></span></span>
+          <button type="submit">Copy Location</button>
         </div>
       </section>
 
@@ -52,7 +59,6 @@
       <p>You are at: <span class="user-pos"></span></p>
       <p>Locations: <span class="locs"></span></p> -->
     </main>
-
 
     <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
