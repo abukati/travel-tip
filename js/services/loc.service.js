@@ -49,6 +49,24 @@ function getLocs() {
   })
 }
 
+function saveLoc(loc) {
+  askNewLocName()
+    .then((res) => {
+      let newLoc = {
+        id: makeId(),
+        name: res,
+        lat: loc.lat(),
+        lng: loc.lng(),
+        createdAt: Date().slice(0, 24),
+        updatedAt: Date().slice(0, 24),
+      }
+      console.log(newLoc)
+      locs.push(newLoc)
+      storageService.saveToStorage(STORAGE_KEY, locs)
+    })
+    .catch((err) => console.log(err))
+}
+
 function askNewLocName() {
   return new Promise((resolve, reject) => {
     const name = prompt('Name the spot')

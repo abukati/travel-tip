@@ -28,27 +28,28 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         lng: ev.latLng.lng(),
       }
       infoWindow = new google.maps.InfoWindow({
-        content: `${JSON.stringify(coords)}`,
         position: coords,
       })
+      infoWindow.setContent(JSON.stringify(ev.latLng.toJSON(), null, 2))
       infoWindow.open(gMap)
     })
   })
+}
+
+function addMarker(loc) {
+  var marker = new google.maps.Marker({
+    position: loc,
+    map: gMap,
+  })
+  gMarkers.push(marker)
+  return marker
 }
 
 function panTo(lat, lng) {
   var laLatLng = new google.maps.LatLng(lat, lng)
   gMap.panTo(laLatLng)
   addMarker(laLatLng)
-}
-
-function addMarker(pos) {
-  var marker = new google.maps.Marker({
-    position: pos,
-    map: gMap,
-  })
-  gMarkers.push(marker)
-  return marker
+  return laLatLng
 }
 
 function getMarkers() {
