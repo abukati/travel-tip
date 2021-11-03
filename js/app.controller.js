@@ -12,13 +12,6 @@ window.onRemoveLoc = onRemoveLoc
 window.onGetLocUrl = onGetLocUrl
 
 function onInit() {
-  const urlSearchParams = new URLSearchParams(window.location.search)
-  const params = Object.fromEntries(urlSearchParams.entries())
-  const coords = { lat: params.lat, lng: params.lng }
-  if (!coords) {
-  }
-  // mapService.panTo(coords)
-
   mapService
     .initMap()
     .then(() => {
