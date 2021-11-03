@@ -3,13 +3,20 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    // map: gMap,
+    getMarkers
 }
 
-var gMap;
+let gMap;
+
+let markers = []
+
+let currPos
+
+
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -18,7 +25,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 center: { lat, lng },
                 zoom: 15
             })
-            console.log('Map!', gMap);
         })
 }
 
@@ -26,9 +32,8 @@ function addMarker(loc) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
-    });
-    return marker;
+    })
+    return marker
 }
 
 function panTo(lat, lng) {
@@ -36,6 +41,16 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng);
 }
 
+function getMarkers() {
+    return Promise.resolve(markers)
+}
+
+getWeather(32.047104, 34.832384)
+function getWeather(lat, lng) {
+    const API_KEY = 'e3e9363a0d66f4413f25492e66a65a56'
+    return axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`)
+            .then(res => console.log(res))
+}
 
 
 function _connectGoogleApi() {
