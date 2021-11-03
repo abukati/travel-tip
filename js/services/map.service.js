@@ -5,6 +5,7 @@ export const mapService = {
   getMarkers,
   getGeocode,
   getLocName,
+  getCoords,
 }
 
 const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
@@ -36,6 +37,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       infoWindow.open(gMap)
     })
   })
+}
+
+function getCoords(coords = gCurrPos) {
+  return coords
 }
 
 function addMarker(loc) {

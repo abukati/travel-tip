@@ -9,8 +9,16 @@ window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onLocClick = onLocClick
 window.onRemoveLoc = onRemoveLoc
+window.onGetLocUrl = onGetLocUrl
 
 function onInit() {
+  const urlSearchParams = new URLSearchParams(window.location.search)
+  const params = Object.fromEntries(urlSearchParams.entries())
+  const coords = { lat: params.lat, lng: params.lng }
+  if (!coords) {
+  }
+  // mapService.panTo(coords)
+
   mapService
     .initMap()
     .then(() => {
@@ -73,7 +81,11 @@ function renderCurrLoc() {
     .catch((err) => (elCurrLocation.innerHTML = 'Are you ok?'))
 }
 
-function onGetLocUrl() {}
+function onGetLocUrl() {
+  const pos = mapService.getCoords()
+  const url = `https://artiombkt.github.io/travel-tip/?lat=${pos.lat}&lng=${pos.lng}`
+  navigator.clipboard.writeText(url)
+}
 
 function renderWeather(weather) {
   const elWeather = document.querySelector('.weather-container .weather')
