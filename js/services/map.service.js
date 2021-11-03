@@ -37,7 +37,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 })
                 infoWindow.setContent(JSON.stringify(ev.latLng.toJSON(), null, 2))
                 infoWindow.open(gMap)
-                addMarker(coords)
             })
         })
 }
