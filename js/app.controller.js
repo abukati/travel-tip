@@ -15,6 +15,7 @@ function onInit() {
     .initMap()
     .then(() => {
       console.log('Map is ready')
+      renderCurrLoc()
     })
     .catch((err) => console.log(err))
   renderLocs()
@@ -22,7 +23,6 @@ function onInit() {
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-  // console.log('Getting Pos')
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject)
   })
@@ -59,13 +59,19 @@ function onPanTo() {
     .getGeocode(location)
     .then(mapService.panTo)
     .then(locService.saveLoc)
+    .then(renderCurrLoc)
     .then(renderLocs)
 }
 
 function renderCurrLoc() {
   const elCurrLocation = document.querySelector('.locations-container span')
-  var strHtmls = ``
-  // elCurrLocation.innerHTML = strHtmls
+  mapService.getLocName().then(locName => {
+    if (locName) {
+      elCurrLocation.innerHTML = locName
+    }
+  })
+  .catch(err => elCurrLocation.innerHTML = 'Are you ok?')
+
 }
 
 function onGetLocUrl() {}
@@ -97,3 +103,5 @@ function onRemoveLoc(locid) {
 }
 
 function onLocClick(locid) {}
+
+document.querySelector('#map').addEventListener('click', renderCurrLoc)

@@ -4,14 +4,18 @@ export const mapService = {
   panTo,
   getMarkers,
   getGeocode,
-  getLocName
+  getLocName,
+
 }
 
 const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
 
 let gMap
 let gMarkers = []
-let currPos
+let gCurrPos = {
+    lat: 32.0749831,
+    lng: 34.9120554
+}
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
   const elMap = document.querySelector('#map')
@@ -28,7 +32,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         lat: ev.latLng.lat(),
         lng: ev.latLng.lng(),
       }
-      getLocName(coords)
+      gCurrPos = coords
       infoWindow = new google.maps.InfoWindow({
         position: coords,
       })
@@ -47,8 +51,9 @@ function addMarker(loc) {
   return marker
 }
 
-function panTo(lat, lng) {
-  var laLatLng = new google.maps.LatLng(lat, lng)
+function panTo(coords) {
+  gCurrPos = coords
+  var laLatLng = new google.maps.LatLng(coords.lat, coords.lng)
   gMap.panTo(laLatLng)
   addMarker(laLatLng)
   return laLatLng
@@ -58,12 +63,12 @@ function getMarkers() {
   return Promise.resolve(gMarkers)
 }
 
-function getLocName(coords) {
+function getLocName(coords = gCurrPos) {
     let latLng = `${coords.lat},${coords.lng}`
     return axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${GOOGLE_API_KEY}`
         )
-        .then(res => res.data.results[0].plus_code.compound_code.slice(8))
+        .then(res => res.data.results[3].formatted_address)
 }
 
 function getGeocode(location) {
