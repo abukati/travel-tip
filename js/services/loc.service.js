@@ -17,8 +17,8 @@ function saveLoc(loc) {
       let newLoc = {
         id: makeId(),
         name: res,
-        lat: loc.lat,
-        lng: loc.lng,
+        lat: loc.lat(),
+        lng: loc.lng(),
         createdAt: Date().slice(0, 24),
         updatedAt: Date().slice(0, 24),
       }
@@ -50,3 +50,5 @@ function _askNewLocName() {
     return name ? resolve(name) : reject('no input')
   })
 }
+
+window.locs = locs
