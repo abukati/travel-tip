@@ -48,6 +48,10 @@ function getCoords(coords = gCurrPos) {
     return coords
 }
 
+function getCoords(coords = gCurrPos) {
+  return coords
+}
+
 function addMarker(loc) {
   var marker = new google.maps.Marker({
     position: loc,

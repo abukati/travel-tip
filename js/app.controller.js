@@ -75,7 +75,6 @@ function onGetLocUrl() {
   navigator.clipboard.writeText(url)
 }
 
-
 function renderWeather(weather) {
   const elWeather = document.querySelector('.weather-container .weather')
   var strHtmls = ``
