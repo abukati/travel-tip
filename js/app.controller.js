@@ -61,9 +61,11 @@ function onPanTo() {
     .then(locService.saveLoc)
     .then(renderCurrLoc)
     .then(renderLocs)
+    .then(renderCurrLoc)
 }
 
 function renderCurrLoc() {
+  console.log('renderCurrLoc')
   const elCurrLocation = document.querySelector('.locations-container span')
   mapService.getLocName().then(locName => {
     if (locName) {

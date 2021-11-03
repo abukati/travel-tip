@@ -5,17 +5,13 @@ export const mapService = {
   getMarkers,
   getGeocode,
   getLocName,
-
 }
 
 const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
 
 let gMap
 let gMarkers = []
-let gCurrPos = {
-    lat: 32.0749831,
-    lng: 34.9120554
-}
+var gCurrPos = { lat: 32.0749831, lng: 34.9120554 }
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
   const elMap = document.querySelector('#map')
@@ -26,7 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       position: { lat, lng },
     })
     infoWindow.open(gMap)
-    gMap.addListener('click', ev => {
+    gMap.addListener('click', (ev) => {
       infoWindow.close()
       const coords = {
         lat: ev.latLng.lat(),
@@ -76,7 +72,7 @@ function getGeocode(location) {
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${GOOGLE_API_KEY}`
     )
-    .then(res => res.data.results[0].geometry.location)
+    .then((res) => res.data.results[0].geometry.location)
 }
 
 function _connectGoogleApi() {
