@@ -43,11 +43,16 @@ function onGetLocs() {
 function onGetUserPos() {
   getPosition()
     .then((pos) => {
+<<<<<<< HEAD
       const loc = {lat: pos.coords.latitude, lng: pos.coords.longitude}
       mapService.panTo(loc)
       // document.querySelector(
       //   '.user-pos'
       // ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+=======
+      const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude }
+      mapService.panTo(coords)
+>>>>>>> 4be45c421958337786be680828aca4b3ee1b4200
     })
     .catch((err) => {
       console.log('err!!!', err)
@@ -66,13 +71,14 @@ function onPanTo() {
 
 function renderCurrLoc() {
   const elCurrLocation = document.querySelector('.locations-container span')
-  mapService.getLocName().then(locName => {
-    if (locName) {
-      elCurrLocation.innerHTML = locName
-    }
-  })
-  .catch(err => elCurrLocation.innerHTML = 'Are you ok?')
-
+  mapService
+    .getLocName()
+    .then((locName) => {
+      if (locName) {
+        elCurrLocation.innerHTML = locName
+      }
+    })
+    .catch((err) => (elCurrLocation.innerHTML = 'Are you ok?'))
 }
 
 function onGetLocUrl() {}
@@ -89,7 +95,8 @@ function renderLocs() {
   locService.getLocs().then((res) => {
     res.forEach((location) => {
       const locId = `${location.id}`
-      strHtmls += `<button class="capitalize location" data-locid="${locId}" onclick="onLocClick(this.dataset.locid)">
+      strHtmls += `<button class="capitalize location" data-locid="${locId}" title="{ lat:${location.lat} , lng:${location.lng} }"
+       onclick="onLocClick(this.dataset.locid)">
       ${location.name}
       <i class="fas fa-trash-alt icon" data-locid="${locId}" onclick="onRemoveLoc(this.dataset.locid)"></i>
       </button>`
@@ -103,6 +110,8 @@ function onRemoveLoc(locid) {
   renderLocs()
 }
 
-function onLocClick(locid) {}
+function onLocClick(locid) {
+  locService.panLoc(locid).then(mapService.panTo).then(renderCurrLoc)
+}
 
 document.querySelector('#map').addEventListener('click', renderCurrLoc)

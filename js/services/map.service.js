@@ -60,11 +60,12 @@ function getMarkers() {
 }
 
 function getLocName(coords = gCurrPos) {
-    let latLng = `${coords.lat},${coords.lng}`
-    return axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${GOOGLE_API_KEY}`
-        )
-        .then(res => res.data.results[3].formatted_address)
+  let latLng = `${coords.lat},${coords.lng}`
+  return axios
+    .get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${GOOGLE_API_KEY}`
+    )
+    .then((res) => res.data.results[3].formatted_address)
 }
 
 function getGeocode(location) {
