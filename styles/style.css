@@ -13,7 +13,12 @@ body {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -83,6 +88,14 @@ button {
   font-size: 30px;
 }
 
+.locations-container .mylocation-btn:hover {
+  color: white;
+}
+
+.locations-container .copylocation-btn:hover {
+  color: blue;
+}
+
 .main-content .content {
   flex-direction: row-reverse;
   width: 100%;
@@ -108,7 +121,7 @@ button {
   text-align: center;
 }
 
-.content .info-container .weather {
+.content .info-container .weather-container {
   border: 2px solid white;
   border-radius: 20px;
   flex-basis: 50%;
@@ -118,10 +131,22 @@ button {
   border: 2px solid white;
   border-radius: 20px;
   flex-basis: 50%;
+  flex-wrap: wrap;
 }
 
 .my-locations .home-btn {
   font-size: 30px;
+}
+
+.my-locations .location {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: cyan;
+}
+
+.location .icon:hover {
+  color: red;
 }
 
 /* HELPERS */
@@ -154,4 +179,8 @@ button {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

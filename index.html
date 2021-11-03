@@ -31,11 +31,10 @@
       <section class="locations-container flex space-between">
         <button>
           <i class="fas fa-map-pin current-location"> </i>
-          <span>Current place name on the map</span>
+          <span></span>
         </button>
         <button type="submit">
           <i class="fas fa-copy copylocation-btn"></i>
-          copy place
         </button>
         <button
           type="submit"
@@ -48,17 +47,13 @@
       <section class="content flex">
         <div id="map"></div>
         <div class="info-container flex columns">
-          <div class="weather flex columns">
+          <div class="weather-container flex columns">
             <h2>Weather today</h2>
-            <span>Rendered weather here</span>
+            <div class="weather"></div>
           </div>
-
           <div class="my-locations flex columns">
             <i class="fas fa-home home-btn"></i>
-            <span
-              >Rendered searched locations here +
-              <i class="fas fa-trash-alt"></i
-            ></span>
+            <div class="saved-locations"></div>
           </div>
         </div>
       </section>

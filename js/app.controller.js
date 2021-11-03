@@ -7,6 +7,8 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onLocClick = onLocClick
+window.onRemoveLoc = onRemoveLoc
 
 function onInit() {
   mapService
@@ -15,6 +17,7 @@ function onInit() {
       console.log('Map is ready')
     })
     .catch((err) => console.log(err))
+  renderLocs()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -56,4 +59,41 @@ function onPanTo() {
     .getGeocode(location)
     .then(mapService.panTo)
     .then(locService.saveLoc)
+    .then(renderLocs)
 }
+
+function renderCurrLoc() {
+  const elCurrLocation = document.querySelector('.locations-container span')
+  var strHtmls = ``
+  // elCurrLocation.innerHTML = strHtmls
+}
+
+function onGetLocUrl() {}
+
+function renderWeather(weather) {
+  const elWeather = document.querySelector('.weather-container .weather')
+  var strHtmls = ``
+  // elWeather.innerHTML = strHtmls
+}
+
+function renderLocs() {
+  const elSavedLocs = document.querySelector('.my-locations .saved-locations')
+  var strHtmls = ``
+  locService.getLocs().then((res) => {
+    res.forEach((location) => {
+      const locId = `${location.id}`
+      strHtmls += `<button class="capitalize location" data-locid="${locId}" onclick="onLocClick(this.dataset.locid)">
+      ${location.name}
+      <i class="fas fa-trash-alt icon" data-locid="${locId}" onclick="onRemoveLoc(this.dataset.locid)"></i>
+      </button>`
+    })
+    elSavedLocs.innerHTML = strHtmls
+  })
+}
+
+function onRemoveLoc(locid) {
+  locService.removeLoc(locid)
+  renderLocs()
+}
+
+function onLocClick(locid) {}
