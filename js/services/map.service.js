@@ -59,6 +59,7 @@ function addMarker(loc) {
 
 function panTo(coords) {
   gCurrPos = coords
+  // Not the best name (laLatLng) - CR
   var laLatLng = new google.maps.LatLng(coords.lat, coords.lng)
   gMap.panTo(laLatLng)
   addMarker(laLatLng)

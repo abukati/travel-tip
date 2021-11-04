@@ -18,7 +18,7 @@ function onInit() {
     .initMap()
     .then(() => {
       console.log('Map is ready')
-      renderCurrLoc()
+      // renderCurrLoc()
       if (coords.lat && coords.lng)
         mapService.initMap(coords.lat, coords.lng).then(renderCurrLoc)
     })
@@ -28,6 +28,7 @@ function onInit() {
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
+  // @CR This function should be in the service
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject)
   })
@@ -72,7 +73,9 @@ function renderCurrLoc() {
 }
 
 function onGetLocUrl() {
+  // @CR This function should get the url ready from the service
   const pos = mapService.getCoords()
+  // @CR No need to build our url here in the controller ( should be able to get it from the service)
   const url = `https://artiombkt.github.io/travel-tip/?lat=${pos.lat}&lng=${pos.lng}`
   navigator.clipboard.writeText(url)
 }
@@ -108,4 +111,5 @@ function onLocClick(locid) {
   locService.panLoc(locid).then(mapService.panTo).then(renderCurrLoc)
 }
 
+// @CR We can make a callback function in the initMap instead of adding event listener here
 document.querySelector('#map').addEventListener('click', renderCurrLoc)

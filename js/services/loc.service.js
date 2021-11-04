@@ -41,6 +41,7 @@ function removeLoc(locId) {
 }
 
 function getLocs() {
+  // return Promise.resolve(locs)
   return new Promise((resolve) => resolve(locs))
 }
 
