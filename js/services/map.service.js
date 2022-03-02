@@ -8,8 +8,6 @@ export const mapService = {
   getCoords,
 }
 
-const GOOGLE_API_KEY = 'AIzaSyBVA3c6L5XdP2nQhdQ2zLeXfoe7GJee8-I'
-
 let gMap
 let gMarkers = []
 var gCurrPos = { lat: 32.0749831, lng: 34.9120554 }
